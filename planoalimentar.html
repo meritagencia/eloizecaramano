@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gerador de Planos Alimentares | Eloize Caramano</title>
+  <meta name="description" content="Crie planos alimentares profissionais e personalizados. Editor completo com exportação em PDF." />
+  <link rel="stylesheet" href="planoalimentar.css" />
+</head>
+<body>
+  
+  <!-- ══════════ LOGIN OVERLAY ══════════ -->
+  <div class="login-overlay show" id="loginOverlay">
+    <div class="login-card">
+      <div class="login-icon" style="margin-bottom: 1.5rem; display: flex; justify-content: center; align-items: center;">
+        <img src="images/logo_login.png" alt="Eloize Caramano" style="width: 100px; height: 100px; border-radius: 50%; object-fit: contain; background: #FFFFFF; padding: 8px; border: 2px solid #879766; box-shadow: 0 4px 12px rgba(0,0,0,0.15);" />
+      </div>
+      <h2>Acesso Restrito</h2>
+      <p>Insira suas credenciais para acessar o gerador.</p>
+      
+      <div class="input-group">
+        <label for="loginUser">Usuário</label>
+        <input type="text" id="loginUser" placeholder="Digite seu usuário" />
+      </div>
+      <div class="input-group">
+        <label for="loginPass">Senha</label>
+        <input type="password" id="loginPass" placeholder="Digite sua senha" />
+      </div>
+      
+      <div id="loginError" class="login-error"></div>
+      <button id="btnLogin" class="btn-login">Entrar</button>
+    </div>
+  </div>
+  <div class="app-layout" id="appLayout">
+
+    <!-- ══════════ TOP BAR ══════════ -->
+    <header class="top-bar" id="topBar">
+      <div class="top-bar-brand">
+        <div class="logo-icon">🥗</div>
+        <h1>Plano Alimentar <span>Generator</span></h1>
+      </div>
+      <div class="top-bar-actions">
+        <button id="btnMyPlans" class="btn-topbar btn-new" title="Ver meus planos">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h7"/></svg>
+          Meus Planos
+        </button>
+        <button id="btnNew" class="btn-topbar btn-new" title="Criar novo plano">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Novo
+        </button>
+        <button id="btnSave" class="btn-topbar btn-save" title="Salvar progresso no Supabase">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+          Salvar
+        </button>
+        <button class="btn-topbar btn-export" id="btnExport" title="Exportar PDF">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Baixar PDF
+        </button>
+      </div>
+    </header>
+
+    <!-- ══════════ EDITOR PANEL ══════════ -->
+    <aside class="editor-panel" id="editorPanel">
+
+      <!-- Patient Info -->
+      <div class="patient-info">
+        <h2>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          Dados do Paciente
+        </h2>
+        <div class="input-group">
+          <label for="patientName">Nome do Paciente</label>
+          <input type="text" id="patientName" placeholder="Ex: João Pedro Rett" />
+        </div>
+        <div class="input-row">
+          <div class="input-group">
+            <label for="planMonth">Mês / Período</label>
+            <input type="text" id="planMonth" placeholder="Ex: Junho - 2026" />
+          </div>
+          <div class="input-group">
+            <label for="brandName">Profissional</label>
+            <input type="text" id="brandName" placeholder="Ex: Nutricionista - Eloize Caramano" value="Nutricionista - Eloize Caramano" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Sections Header -->
+      <div class="sections-header">
+        <h3>Seções do Plano</h3>
+        <button class="btn-add-section" id="btnAddSection">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M12 5v14M5 12h14"/></svg>
+          Adicionar
+        </button>
+      </div>
+
+      <!-- Sections List -->
+      <div class="sections-list" id="sectionsList">
+        <!-- Sections will be rendered by JS -->
+      </div>
+    </aside>
+
+    <!-- ══════════ PREVIEW PANEL ══════════ -->
+    <main class="preview-panel" id="previewPanel">
+
+      <!-- Preview Toolbar -->
+      <div class="preview-toolbar">
+        <div class="page-nav">
+          <button class="page-nav-btn" id="prevPage" title="Página anterior">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+          </button>
+          <span class="page-indicator" id="pageIndicator">Página 1 de 1</span>
+          <button class="page-nav-btn" id="nextPage" title="Próxima página">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+        </div>
+        
+      </div>
+
+      <!-- Preview Viewport -->
+      <div class="preview-viewport" id="previewViewport">
+        <div class="pdf-page-container" id="pdfContainer">
+          <!-- PDF pages will be rendered by JS -->
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- ══════════ ADD SECTION MODAL ══════════ -->
+  <div class="modal-overlay" id="addSectionModal">
+    <div class="modal-card">
+      <h2>Adicionar Seção</h2>
+      <div class="modal-sections-grid" id="modalSectionsGrid">
+        <!-- Options rendered by JS -->
+      </div>
+      <div class="modal-actions">
+        <button class="modal-btn-cancel" id="modalCancel">Cancelar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ EXPORT OVERLAY ══════════ -->
+  <div class="export-overlay" id="exportOverlay">
+    <div class="export-spinner"></div>
+    <p class="export-text">Gerando seu PDF...</p>
+  </div>
+
+  <!-- ══════════ TOAST ══════════ -->
+  <div class="toast" id="toast"></div>
+
+  <!-- Modal: Meus Planos -->
+  <div id="plansModal" class="modal-overlay">
+    <div class="modal-content plans-modal-content">
+      <div class="modal-header">
+        <h2>Meus Planos Salvos</h2>
+        <button class="modal-close" id="modalPlansClose">×</button>
+      </div>
+      <div class="modal-body">
+        <div id="plansList" class="plans-list">
+          <!-- Plans will be injected here via JS -->
+          <div style="padding: 2rem; text-align: center; color: var(--gray-500);">Carregando planos...</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ SCRIPTS ══════════ -->
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.2/dist/jspdf.umd.min.js"></script>
+  <script>
+    // Clear corrupted localStorage if it exists and has no valid sections
+    try {
+      var saved = localStorage.getItem('planoAlimentar_state');
+      if (saved) {
+        var parsed = JSON.parse(saved);
+        if (!parsed || !Array.isArray(parsed.sections)) {
+          localStorage.removeItem('planoAlimentar_state');
+          console.warn('Removed corrupted localStorage data');
+        }
+      }
+    } catch(e) {
+      localStorage.removeItem('planoAlimentar_state');
+    }
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" async></script>
+  <script src="planoalimentar.js"></script>
+
+</body>
+</html>
