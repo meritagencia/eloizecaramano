@@ -919,8 +919,15 @@ footer a:hover { color: white; }
    RESPONSIVE
 ══════════════════════════════ */
 @media (max-width: 1024px) {
-  .hero { align-items: flex-start; padding-top: 55vh; background-position: center top; }
-  .hero::before { background: linear-gradient(to bottom, transparent 40%, var(--cream) 100%); }
+  .hero {
+    align-items: flex-start;
+    padding-top: 50vh;
+    background: url('images/TopoMobile.png') no-repeat center top;
+    background-size: 100% auto;
+  }
+  .hero::before {
+    background: linear-gradient(to bottom, transparent 35%, var(--cream) 65%);
+  }
   .hero-content-side { padding: 2rem 0 4rem; max-width: 100%; }
   .about-grid { grid-template-columns: 1fr; gap: 3.5rem; }
   .steps-grid { grid-template-columns: 1fr; gap: 3.5rem; }
