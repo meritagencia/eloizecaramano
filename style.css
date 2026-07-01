@@ -921,14 +921,14 @@ footer a:hover { color: white; }
 @media (max-width: 1024px) {
   .hero {
     align-items: flex-start;
-    padding-top: 50vh;
-    background: url('images/TopoMobile.png') no-repeat center top;
+    padding-top: 38vh;
+    background: #EDDCCE url('images/TopoMobile.png') no-repeat center top;
     background-size: 100% auto;
   }
   .hero::before {
-    background: linear-gradient(to bottom, transparent 35%, var(--cream) 65%);
+    background: linear-gradient(to bottom, transparent 30%, #EDDCCE 55%);
   }
-  .hero-content-side { padding: 2rem 0 4rem; max-width: 100%; }
+  .hero-content-side { padding: 0.5rem 0 3rem; max-width: 100%; }
   .about-grid { grid-template-columns: 1fr; gap: 3.5rem; }
   .steps-grid { grid-template-columns: 1fr; gap: 3.5rem; }
   .about-image-wrap, .steps-image-wrap { max-width: 500px; margin: 0 auto; }
