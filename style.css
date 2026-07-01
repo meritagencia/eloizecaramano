@@ -921,7 +921,7 @@ footer a:hover { color: white; }
 @media (max-width: 1024px) {
   .hero {
     align-items: flex-start;
-    padding-top: 38vh;
+    padding-top: 30vh;
     background: #EDDCCE url('images/TopoMobile.png') no-repeat center top;
     background-size: 100% auto;
   }
