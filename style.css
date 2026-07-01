@@ -939,7 +939,7 @@ footer a:hover { color: white; }
   section { padding: 4.5rem 0; }
 
   .nav-links { display: none; }
-  .nav-toggle { display: flex; }
+  .nav-toggle { display: none; }
 
   .hero-stats { gap: 1.5rem; }
   .testimonials-grid { grid-template-columns: 1fr; }
